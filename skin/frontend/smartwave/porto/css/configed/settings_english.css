@@ -1,0 +1,17 @@
+/**
+ * WARNING: Do not change this file. Your changes will be lost.
+ * 2016-05-21 10:06:59 */
+
+.cms-index-index .header-container.type14 {
+    position: absolute;
+    width: 100%;
+    z-index: 1;
+    background-color: transparent;
+}
+.footer-bottom {
+    border-top: 1px solid #ecebec;
+}
+.footer-middle {
+    border-bottom: 1px solid #dddbdd;
+}
+#tab_static_block_tab_1_contents { overflow: auto; }
