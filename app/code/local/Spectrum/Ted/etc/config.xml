@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Spectrum_Ted>
+      <version>0.1.0</version>
+    </Spectrum_Ted>
+  </modules>
+  <global>
+    <helpers>
+      <ted>
+        <class>Spectrum_Ted_Helper</class>
+      </ted>
+    </helpers>
+	<resources>
+	  <ted_setup>
+		<setup>
+		  <module>Spectrum_Ted</module>
+		</setup>
+		<connection>
+		  <use>core_setup</use>
+		</connection>
+	  </ted_setup>
+	  <ted_write>
+		<connection>
+		  <use>core_write</use>
+		</connection>
+	  </ted_write>
+	  <ted_read>
+		<connection>
+		  <use>core_read</use>
+		</connection>
+	  </ted_read>
+	</resources>
+  </global>
+</config> 

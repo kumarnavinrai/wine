@@ -1,0 +1,311 @@
+<?xml version="1.0"?>
+<config>
+    <sections>
+        <homeslider translate="label comment" module="homeslider">
+            <tab>swextensions</tab>
+            <label>Homepage Slider</label>
+            <frontend_type>text</frontend_type>
+            <sort_order>10</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <general translate="label comment" module="homeslider">
+                    <label>General Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <enabled>
+                            <label>Enable Slider</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_enabledisable</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </enabled>
+                        <slider_type>
+                            <label>Type</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>homeslider/source_slidertypes</source_model>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
+                        </slider_type>
+                        <static_block_id>
+                            <label>Static Block ID</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <depends>
+                                <enabled>1</enabled>
+                            </depends>
+                        </static_block_id>
+                    </fields>
+                </general>
+				<sImages translate="label">
+                    <label>HomePage Slider 18 Images </label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>2</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+					<fields>
+							<main_banner translate="label comment">
+								<label>Main HomePage Banner</label>
+								<comment>Default Size (1900x1102 px)</comment>
+								<frontend_type>image</frontend_type>
+								<backend_model>adminhtml/system_config_backend_image</backend_model>
+								<upload_dir config="system/filesystem/media" scope_info="1">theme</upload_dir>
+                        		<base_url type="media" scope_info="1">theme</base_url>
+								<sort_order>1</sort_order>
+								<show_in_default>1</show_in_default>
+								<show_in_website>1</show_in_website>
+								<show_in_store>1</show_in_store>
+							</main_banner>   
+							<banner1 translate="label comment">
+								<label>HomePage Sub Banner1</label>
+								<comment>Default Size (943x589 px)</comment>
+								<frontend_type>image</frontend_type>
+								<backend_model>adminhtml/system_config_backend_image</backend_model>
+								<upload_dir config="system/filesystem/media" scope_info="1">theme</upload_dir>
+                        		<base_url type="media" scope_info="1">theme</base_url>
+								<sort_order>3</sort_order>
+								<show_in_default>1</show_in_default>
+								<show_in_website>1</show_in_website>
+								<show_in_store>1</show_in_store> 
+							</banner1>
+							<banner1_link translate="label comment">
+								<label>Banner1 Link</label>
+								<comment>Link to the image above</comment>
+								<frontend_type>text</frontend_type>
+								<sort_order>4</sort_order>
+								<show_in_default>1</show_in_default>
+								<show_in_website>1</show_in_website>
+								<show_in_store>1</show_in_store>
+							</banner1_link>
+							<banner2 translate="label comment">
+								<label>HomePage Sub Banner2</label>
+								<comment>Default Size (458x461 px)</comment>
+								<frontend_type>image</frontend_type>
+								<backend_model>adminhtml/system_config_backend_image</backend_model>
+								<upload_dir config="system/filesystem/media" scope_info="1">theme</upload_dir>
+                        		<base_url type="media" scope_info="1">theme</base_url>
+								<sort_order>5</sort_order>
+								<show_in_default>1</show_in_default>
+								<show_in_website>1</show_in_website>
+								<show_in_store>1</show_in_store> 
+							</banner2>
+							<banner2_link translate="label comment">
+								<label>Banner2 Link</label>
+								<comment>Link to the image above</comment>
+								<frontend_type>text</frontend_type>
+								<sort_order>6</sort_order>
+								<show_in_default>1</show_in_default>
+								<show_in_website>1</show_in_website>
+								<show_in_store>1</show_in_store>
+							</banner2_link>
+							<banner3 translate="label comment">
+								<label>HomePage Sub Banner3</label>
+								<comment>Default Size (458x782 px)</comment>
+								<frontend_type>image</frontend_type>
+								<backend_model>adminhtml/system_config_backend_image</backend_model>
+								<upload_dir config="system/filesystem/media" scope_info="1">theme</upload_dir>
+                        		<base_url type="media" scope_info="1">theme</base_url>
+								<sort_order>7</sort_order>
+								<show_in_default>1</show_in_default>
+								<show_in_website>1</show_in_website>
+								<show_in_store>1</show_in_store> 
+							</banner3>
+							<banner3_link translate="label comment">
+								<label>Banner3 Link</label>
+								<comment>Link to the image above</comment>
+								<frontend_type>text</frontend_type>
+								<sort_order>8</sort_order>
+								<show_in_default>1</show_in_default>
+								<show_in_website>1</show_in_website>
+								<show_in_store>1</show_in_store>
+							</banner3_link>
+						    <banner4 translate="label comment">
+								<label>HomePage Sub Banner4</label>
+								<comment>Default Size (1417x243 px)</comment>
+								<frontend_type>image</frontend_type>
+								<backend_model>adminhtml/system_config_backend_image</backend_model>
+								<upload_dir config="system/filesystem/media" scope_info="1">theme</upload_dir>
+                        		<base_url type="media" scope_info="1">theme</base_url>
+								<sort_order>9</sort_order>
+								<show_in_default>1</show_in_default>
+								<show_in_website>1</show_in_website>
+								<show_in_store>1</show_in_store> 
+							</banner4> 
+							<banner4_link translate="label comment">
+								<label>Banner4 Link</label>
+								<comment>Link to the image above</comment>
+								<frontend_type>text</frontend_type>
+								<sort_order>10</sort_order>
+								<show_in_default>1</show_in_default>
+								<show_in_website>1</show_in_website>
+								<show_in_store>1</show_in_store>
+							</banner4_link>
+							 <banner5 translate="label comment">
+								<label>HomePage Sub Banner5</label>
+								<comment>Default Size (1891x401 px)</comment>
+								<frontend_type>image</frontend_type>
+								<backend_model>adminhtml/system_config_backend_image</backend_model>
+								<upload_dir config="system/filesystem/media" scope_info="1">theme</upload_dir>
+                        		<base_url type="media" scope_info="1">theme</base_url>
+								<sort_order>11</sort_order>
+								<show_in_default>1</show_in_default>
+								<show_in_website>1</show_in_website>
+								<show_in_store>1</show_in_store> 
+							</banner5>  
+							<banner5_link translate="label comment">
+								<label>Banner5 Link</label>
+								<comment>Link to the image above</comment>
+								<frontend_type>text</frontend_type>
+								<sort_order>12</sort_order>
+								<show_in_default>1</show_in_default>
+								<show_in_website>1</show_in_website>
+								<show_in_store>1</show_in_store>
+							</banner5_link> 
+							<banner6 translate="label comment">
+								<label>HomePage Sub Banner6</label>
+								<comment>Default Size (468x838 px)</comment>
+								<frontend_type>image</frontend_type>
+								<backend_model>adminhtml/system_config_backend_image</backend_model>
+								<upload_dir config="system/filesystem/media" scope_info="1">theme</upload_dir>
+                        		<base_url type="media" scope_info="1">theme</base_url>
+								<sort_order>13</sort_order>
+								<show_in_default>1</show_in_default>
+								<show_in_website>1</show_in_website>
+								<show_in_store>1</show_in_store> 
+							</banner6>  
+							<banner6_link translate="label comment">
+								<label>Banner6 Link</label>
+								<comment>Link to the image above</comment>
+								<frontend_type>text</frontend_type>
+								<sort_order>14</sort_order>
+								<show_in_default>1</show_in_default>
+								<show_in_website>1</show_in_website>
+								<show_in_store>1</show_in_store>
+							</banner6_link> 
+							<banner7 translate="label comment">
+								<label>HomePage Sub Banner7</label>
+								<comment>Default Size (458x565 px)</comment>
+								<frontend_type>image</frontend_type>
+								<backend_model>adminhtml/system_config_backend_image</backend_model>
+								<upload_dir config="system/filesystem/media" scope_info="1">theme</upload_dir>
+                        		<base_url type="media" scope_info="1">theme</base_url>
+								<sort_order>15</sort_order>
+								<show_in_default>1</show_in_default>
+								<show_in_website>1</show_in_website>
+								<show_in_store>1</show_in_store> 
+							</banner7> 
+							<banner7_link translate="label comment">
+								<label>Banner7 Link</label>
+								<comment>Link to the image above</comment>
+								<frontend_type>text</frontend_type>
+								<sort_order>16</sort_order>
+								<show_in_default>1</show_in_default>
+								<show_in_website>1</show_in_website>
+								<show_in_store>1</show_in_store>
+							</banner7_link> 
+							<banner8 translate="label comment">
+								<label>HomePage Sub Banner8</label>
+								<comment>Default Size (940x550 px)</comment>
+								<frontend_type>image</frontend_type>
+								<backend_model>adminhtml/system_config_backend_image</backend_model>
+								<upload_dir config="system/filesystem/media" scope_info="1">theme</upload_dir>
+                        		<base_url type="media" scope_info="1">theme</base_url>
+								<sort_order>17</sort_order>
+								<show_in_default>1</show_in_default>
+								<show_in_website>1</show_in_website>
+								<show_in_store>1</show_in_store> 
+							</banner8>
+							<banner8_link translate="label comment">
+								<label>Banner8 Link</label>
+								<comment>Link to the image above</comment>
+								<frontend_type>text</frontend_type>
+								<sort_order>18</sort_order>
+								<show_in_default>1</show_in_default>
+								<show_in_website>1</show_in_website>
+								<show_in_store>1</show_in_store>
+							</banner8_link>
+							<banner9 translate="label comment">
+								<label>HomePage Sub Banner9</label>
+								<comment>Default Size (468x242 px)</comment>
+								<frontend_type>image</frontend_type>
+								<backend_model>adminhtml/system_config_backend_image</backend_model>
+								<upload_dir config="system/filesystem/media" scope_info="1">theme</upload_dir>
+                        		<base_url type="media" scope_info="1">theme</base_url>
+								<sort_order>19</sort_order>
+								<show_in_default>1</show_in_default>
+								<show_in_website>1</show_in_website>
+								<show_in_store>1</show_in_store> 
+							</banner9>
+							<banner9_link translate="label comment">
+								<label>Banner9 Link</label>
+								<comment>Link to the image above</comment>
+								<frontend_type>text</frontend_type>
+								<sort_order>20</sort_order>
+								<show_in_default>1</show_in_default>
+								<show_in_website>1</show_in_website>
+								<show_in_store>1</show_in_store>
+							</banner9_link>
+							<banner10 translate="label comment">
+								<label>HomePage Sub Banner10</label>
+								<comment>Default Size (468x242 px)</comment>
+								<frontend_type>image</frontend_type>
+								<backend_model>adminhtml/system_config_backend_image</backend_model>
+								<upload_dir config="system/filesystem/media" scope_info="1">theme</upload_dir>
+                        		<base_url type="media" scope_info="1">theme</base_url>
+								<sort_order>21</sort_order>
+								<show_in_default>1</show_in_default>
+								<show_in_website>1</show_in_website>
+								<show_in_store>1</show_in_store> 
+							</banner10>
+							<banner10_link translate="label comment">
+								<label>Banner10 Link</label>
+								<comment>Link to the image above</comment>
+								<frontend_type>text</frontend_type>
+								<sort_order>22</sort_order>
+								<show_in_default>1</show_in_default>
+								<show_in_website>1</show_in_website>
+								<show_in_store>1</show_in_store>
+							</banner10_link>
+							<banner11 translate="label comment">
+								<label>HomePage Sub Banner11</label>
+								<comment>Default Size (468x242 px)</comment>
+								<frontend_type>image</frontend_type>
+								<backend_model>adminhtml/system_config_backend_image</backend_model>
+								<upload_dir config="system/filesystem/media" scope_info="1">theme</upload_dir>
+                        		<base_url type="media" scope_info="1">theme</base_url>
+								<sort_order>23</sort_order>
+								<show_in_default>1</show_in_default>
+								<show_in_website>1</show_in_website>
+								<show_in_store>1</show_in_store> 
+							</banner11>  
+							<banner11_link translate="label comment">
+								<label>Banner11 Link</label>
+								<comment>Link to the image above</comment>
+								<frontend_type>text</frontend_type>
+								<sort_order>24</sort_order>
+								<show_in_default>1</show_in_default>
+								<show_in_website>1</show_in_website>
+								<show_in_store>1</show_in_store>
+							</banner11_link>     
+                    </fields>
+				</sImages>
+            </groups>
+        </homeslider>
+    </sections>
+</config>

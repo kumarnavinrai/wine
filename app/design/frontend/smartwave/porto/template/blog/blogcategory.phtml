@@ -1,0 +1,74 @@
+<?php $posts = $this->getPosts(); ?>
+<div id="messages_product_view">
+    <?php Mage::app()->getLayout()->getMessagesBlock()->setMessages(Mage::getSingleton('customer/session')->getMessages(true)); ?> 
+    <?php echo Mage::app()->getLayout()->getMessagesBlock()->getGroupedHtml(); ?> 
+</div>
+<?php $i = 0; 
+ foreach ($posts as $post): 
+
+		$p = $post->getCats();
+		$a = strtolower($p[0]["title"]);
+		if (strpos($a, 'wine') !== false) {
+			 $i = $i + 1;
+		}
+ endforeach; 
+$res = $i * 250;
+ ?>
+ <div class="karpal-parent">
+<div class="posts-wrap karpal" <?php if($i>0) { echo 'style="width:'.$res.'px;'; } ?>">
+<?php foreach ($posts as $post): ?>
+
+		    <?php 
+		 $i = $i + 1;
+		$p = $post->getCats();
+		//var_dump($p);
+		$a = strtolower($p[0]["title"]);
+		if (strpos($a, 'wine') !== false) {
+			
+		
+		//echo $p[0]["title"].'maju';
+		//echo $post->getCategoryId().'maju';  ?>
+    <div class="col-sm-3" style="width:250px;">
+
+		<div class="ca-menu">
+        <?php if($banner_content = $post->getBannerContent()): ?>
+        <div class="postBanner">
+        <?php
+            echo $banner_content;
+        ?>
+        </div>
+        <?php endif; ?>
+        
+		<div class="post-image">
+                <?php
+                    if($post_image = $post->getImage()){
+                ?>
+                    <a href="<?php echo $post->getAddress(); ?>" >
+					<img style="max-height:128px;" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).$post_image; ?>" alt=""/>
+				</a>
+                <?php
+                    }
+                ?>
+		</div>
+		<div style="overflow:hidden;position:relative">
+        <div class="postTitle">
+            <h2><a href="<?php echo $post->getAddress(); ?>" ><?php echo $post->getTitle(); ?></a></h2>
+        </div>
+		</div>
+        <div class="postContent">
+		<?php 
+		$des = $post->getPostContent();//substr(, 0, 250);
+		echo substr(strip_tags($des), 0, 185).'......'; 		 
+		?><br>
+		<a class="readmore" href="<?php echo $post->getAddress(); ?>"><?php echo $this->__("Read more >");?></a>
+		</div>
+		
+</div>
+        
+        <?php echo $this->getBookmarkHtml($post) ?>
+    </div>
+	<?php } ?>
+<?php endforeach; ?>
+</div>
+</div>
+<?php //echo $this->getChildHtml('smartwave_blog_comments_toolbar'); ?>

@@ -1,0 +1,139 @@
+<?php
+/**
+ Made by Smartwave.
+ */
+?>
+<?php
+    $store = Mage::app()->getStore();
+    $code  = $store->getCode();
+    $popup = Mage::getStoreConfig('porto_settings/newsletter_popup',$code);
+    $delay = $popup["delay"];
+    if(!$delay || !is_numeric($delay))
+        $delay = 3000;
+?>
+<script type="text/javascript">
+    jQuery(function($) {
+        var check_cookie = $.cookie('newsletter_popup');
+        if(window.location!=window.parent.location){
+            jQuery('#newsletter_popup').remove();
+        }else{
+            if(check_cookie == null || check_cookie == 'shown') {
+                setTimeout(function(){
+                    beginNewsletterForm();
+                }, <?php echo $delay; ?>);
+            }
+            $('#newsletter_popup_dont_show_again').on('change', function(){
+                if($(this).length){        
+                    var check_cookie = $.cookie('newsletter_popup');
+                    if(check_cookie == null || check_cookie == 'shown') {
+                        $.cookie('newsletter_popup','dontshowitagain');            
+                    }
+                    else
+                    {
+                        $.cookie('newsletter_popup','shown');
+                        beginNewsletterForm();
+                    }
+                } else {
+                    $.cookie('newsletter_popup','shown');
+                }
+            });
+        }
+    });
+
+function beginNewsletterForm() {
+    jQuery.fancybox({
+        'padding': '0px',
+        'autoScale': true,
+        'transitionIn': 'fade',
+        'transitionOut': 'fade',
+        'type': 'inline',
+        'href': '#newsletter_popup',
+        'onComplete': function() {
+            $.cookie('newsletter_popup', 'shown');
+        },
+        'tpl': { 
+            closeBtn: '<a title="Close" class="fancybox-item fancybox-close fancybox-newsletter-close" href="javascript:;" onclick="javascript:notShowAgain();"></a>' 
+        },
+        'helpers': {
+            overlay: {
+                locked: false
+            }
+        }
+    });
+    jQuery('#newsletter_popup').trigger('click');
+}
+
+</script>
+<style type="text/css">
+<?php
+    if($popup["newsletter_custom_style"]){
+        echo $popup["newsletter_custom_style"];
+    }
+?>
+#newsletter_popup{
+<?php
+    if($popup["newsletter_width"]){
+        echo "width:".$popup["newsletter_width"].";";
+    }
+    if($popup["newsletter_height"]){
+        echo "height:".$popup["newsletter_height"].";";
+    }
+    if($popup["newsletter_bg_color"]){
+        echo "background-color:".$popup["newsletter_bg_color"].";";
+    }
+    if(isset($popup["newsletter_bg_image"]) && $popup["newsletter_bg_image"]){
+?>
+    background-image:url(<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)."porto/newsletter_popup/".$popup['newsletter_bg_image'];?>);
+<?php
+    }
+?>
+}
+</style>
+<div class="block block-subscribe" id="newsletter_popup">
+    <form action="<?php echo $this->getFormActionUrl() ?>" method="post" id="newsletter-popup-validate-detail" onsubmit="setNewsletterCookie()">
+        <div class="block-content" style="max-width: 100%;margin-left: auto;margin-right: auto; ">
+            <?php
+                if($popup["show_logo"]){
+            ?>
+                    <img style="width:92%;" src="<?php echo $this->getSkinUrl($popup["show_logo"]); ?>" alt="" />
+            <?php
+                }
+            ?>
+            <?php echo $popup['newsletter_content']; ?>
+            <div class="input-box" style="padding:0 ">
+				<button  style="margin: 5% 0 3% 10%;width: 80%;" type="submit" title="<?php echo $this->__('Age Verification') ?>" class="button"><span style="height:auto;"><span style="font-size: 29px;font-weight:600;background-color: #2d1608;height:auto;padding:6%;color: white;line-height:inherit;text-transform: uppercase;"><?php echo $this->__("Confirm You're Over 21") ?></span></span></button>
+			
+				<div style="font-family: monospace;font-size: 20px;margin-bottom: 0%;color: black;font-weight: 600;">Enter Your Email:</div>
+                <input type="text" name="email" id="newsletter_popup_email" style="
+    margin-top: 2%;width: 74%;float:inherit;background-color: #edebed;" title="<?php echo $this->__('Sign up for our newsletter') ?>" class="input-text required-entry validate-email" placeholder="<?php echo $this->__("Email Address"); ?>" />
+                
+				<div style="width: 100%;padding-top: 2%;"><h1 style="font-family: monospace;font-size: 28px;color: black;text-transform: uppercase;font-weight: 600;">So, what are we drinking today?</h1></div>
+                <div class="clearer"></div>
+				
+								
+            </div>
+        </div>
+    </form>
+    <script type="text/javascript">
+    //<![CDATA[
+        var newsletterpopupSubscriberFormDetail = new VarienForm('newsletter-popup-validate-detail');
+        document.getElementById("newsletter-popup-validate-detail").onsubmit=function() {
+            jQuery.cookie('newsletter_popup','dontshowitagain');
+        }
+
+
+		
+    //]]>
+	function notShowAgain() {
+		 jQuery.cookie('newsletter_popup','dontshowitagain');
+		
+	}
+	
+	
+		
+    </script>
+    <!-- <div class="subscribe-bottom">
+        <input type="checkbox" id="newsletter_popup_dont_show_again"/>
+        <label for="newsletter_popup_dont_show_again"><?php echo $this->__("Don't show this popup again"); ?></label>
+    </div> -->
+</div>

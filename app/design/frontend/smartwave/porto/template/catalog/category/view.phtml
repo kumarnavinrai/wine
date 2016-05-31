@@ -1,0 +1,85 @@
+<?php
+    $store = Mage::app()->getStore();
+    $code  = $store->getCode();
+    
+    $_helper    = $this->helper('catalog/output');
+    $_category  = $this->getCurrentCategory();
+    $_showcartbutton = Mage::getStoreConfig('porto_settings/category_grid/show_addtocart', $code);
+    $_showcartbutton = Mage::getStoreConfig('porto_settings/category_grid/show_addtolinks', $code);
+    $_imgHtml   = '';
+    if ($_imgUrl = $_category->getImageUrl()) {
+        $_imgHtml = '<p class="category-image"><img src="'.$_imgUrl.'" alt="'.$this->escapeHtml($_category->getName()).'" title="'.$this->escapeHtml($_category->getName()).'" /></p>';
+        $_imgHtml = $_helper->categoryAttribute($_category, $_imgHtml, 'image');
+    }
+?>
+<?php echo $_imgHtml ?>
+<?php
+    if(!Mage::getStoreConfig("porto_settings/category/fullwidth_description",$code)){
+        if($_description=$_category->getDescription()){
+?>
+<div class="category-description std">
+<?php
+            echo $_helper->categoryAttribute($_category, $_description, 'description');
+?>
+</div>
+<?php
+        }
+    }
+?>
+<div class="page-title category-title">
+    <?php if($this->IsRssCatalogEnable() && $this->IsTopCategory()): ?>
+        <a href="<?php echo $this->getRssLink() ?>" class="link-rss"><?php echo $this->__('Subscribe to RSS Feed') ?></a>
+    <?php endif; ?>
+    <h1><?php echo $_helper->categoryAttribute($_category, $_category->getName(), 'name') ?></h1>
+</div>
+
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+
+<?php if($this->isContentMode()): ?>
+    <?php echo $this->getCmsBlockHtml() ?>
+
+<?php elseif($this->isMixedMode()): ?>
+    <?php echo $this->getCmsBlockHtml() ?>
+    <?php echo $this->getProductListHtml() ?>
+
+<?php else: ?>
+    <?php echo $this->getProductListHtml() ?>
+<?php endif; ?>
+<h1>&nbsp;</h1>
+<?php 
+$category = $_category;
+$cat = '';
+$phtml = '';
+
+ if ($category)
+                    {
+                        while($category->getLevel() != 2)
+                        {
+                            $category = $category->getParentCategory();
+							
+                            if (!$category)
+                            {
+                                break;
+                            }
+                        }
+                        if ($category)
+                        {
+                            $cat = $category->getName();
+                        }
+                        else
+                        {
+                            $cat = '';
+                        }
+                    }
+					
+if($cat == 'Wine') { $phtml = '{{block type="blog/blog" name="blog" alias="list_blog" template="blog/blogcategory.phtml"}}'; } 
+else if($cat == 'Spirits') { $phtml = '{{block type="blog/blog" name="blog" alias="list_blog" template="blog/blogcategoryliquor.phtml"}}'; }
+else if($cat == 'Beer') { $phtml = '{{block type="blog/blog" name="blog" alias="list_blog" template="blog/blogcategorybeer.phtml"}}'; }
+ if($cat!='')
+ { 
+	$filter = new Mage_Widget_Model_Template_Filter();
+	$_widget = $filter->filter($phtml);
+	echo $_widget; 
+}
+?>
+ 

@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Spectrumted (Neo Industries Pty Ltd)
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to Neo Industries Pty LTD Non-Distributable Software Modification License (NDSML)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.spectrumted.com.au/legal/licenses/NDSM.html
+ * If the license is not included with the package or for any other reason, 
+ * you did not receive your licence please send an email to 
+ * license@spectrumted.com.au so we can send you a copy immediately.
+ *
+ *
+ * @category    modules
+ * @module      Spectrumted_Recipe
+ * @copyright   Copyright (c) 2011 Neo Industries Pty Ltd (http://www.spectrumted.com.au)
+ * @license     http://www.spectrumted.com.au/  Non-Distributable Software Modification License(NDSML 1.0)
+ */
+ -->
+<layout>
+    <default>
+        <reference name="top.links">
+            <action ifconfig="recipe/general/enable_top_menu_link" method="addLink" translate="title label" module="spectrumted_recipe"><label helper="spectrumted_recipe/getRecipeLabel"/><url helper="spectrumted_recipe/getRecipeUrl"/><title helper="spectrumted_recipe/getRecipeTitle"/><prepare/><urlParams/><position>10</position></action>
+            <!--<action method="removeLinkByUrl"><url><url helper="spectrumted_recipe/getRecipeUrl"/></url></action>-->
+        </reference>
+    </default>
+    <spectrumted_recipe_default>
+        <reference name="head">
+            <action method="setTitle" translate="title"><title helper="spectrumted_recipe/getRecipeTitle"/></action>
+            <action method="addCss"><value>css/spectrumted/recipe/recipe.css</value></action>
+        </reference> 
+        <!--<reference name="left">
+            <block type="spectrumted_recipe/tag_list" name="recipe.tag.list" />
+        </reference>-->
+        <reference name="right">
+            
+            <block type="spectrumted_recipe/category_list" before="-" name="recipe.category.list">
+                <action method="setShowPopulatedOnly" ><show>1</show></action>
+            </block>
+            <block type="spectrumted_recipe/widget_post_list" after="recipe.category.list" name="recipe.latest.posts"/>
+            <block  type="spectrumted_recipe/category_list_rss" after="recipe.latest.posts" name="recipe.category.list.rss">
+                <action method="setShowPopulatedOnly" ><show>1</show></action>
+            </block>
+        </reference>
+    </spectrumted_recipe_default>
+    
+    <spectrumted_recipe_index_index>
+        <update handle="spectrumted_recipe_default"/>
+        <reference name="content">
+            <block type="spectrumted_recipe/post_list" name="post.list">
+                <action method="setSummaryBlockType"><block>spectrumted_recipe/post_summary</block></action>
+                <action method="setSummaryTemplate"><block>spectrumted/recipe/post/summary.phtml</block></action>
+                <action ifconfig="recipe/customer/enabled" method="setUseCustomerPreferences"><use_customer_preferences>true</use_customer_preferences></action>
+            </block>
+        </reference>
+    </spectrumted_recipe_index_index>
+
+    <spectrumted_recipe_index_all>
+        <update handle="spectrumted_recipe_index_index"/>
+        <reference name="post.list">
+            <action ifconfig="recipe/customer/enabled" method="setUseCustomerPreferences"><use_customer_preferences>false</use_customer_preferences></action>
+        </reference>
+    </spectrumted_recipe_index_all>
+
+    <spectrumted_recipe_post_index>
+        <update handle="spectrumted_recipe_default"/>
+        <reference name="content">
+            <block type="spectrumted_recipe/post_detail" name="recipe.post.detail" >
+                <block type="spectrumted_recipe/comment_list" name="recipe.post.comment.list" />
+                <block type="spectrumted_recipe/comment_form" name="recipe.post.comment.form" />
+            </block>
+        </reference>
+    </spectrumted_recipe_post_index>
+    
+    <spectrumted_recipe_category_index>
+        <update handle="spectrumted_recipe_index_index"/>
+    </spectrumted_recipe_category_index>
+    
+    <rss_recipe_index>
+       <block  type="spectrumted_recipe/rss_recipe" output="toHtml" name="rss.recipe"/>
+    </rss_recipe_index>
+    <rss_index_index>
+        <reference name="rss.list">
+              <action method="setTemplate"><template>spectrumted/recipe/rss/list.phtml</template></action>
+        </reference>
+    </rss_index_index>
+    
+    <customer_account>
+        <reference name="customer_account_navigation">			
+            <action method="addLink" translate="label" module="spectrumted_recipe">
+                <name>recipe_preferences</name>
+                <path>recipe/preferences/index/</path>
+                <label>Recipe Preferences</label>
+            </action>	
+        </reference>
+    </customer_account>
+    <spectrumted_recipe_preferences_index translate="label">
+        <label>Customer My Account Recipe Preferences Edit Form</label>
+        <!-- Mage_Customer -->
+        <update handle="customer_account"/>
+        <reference name="my.account.wrapper">
+            <block type="spectrumted_recipe/account_preferences_edit" name="spectrumted_recipe_preferences_edit" template="spectrumted/recipe/account/preferences/edit.phtml"/>
+        </reference>
+    </spectrumted_recipe_preferences_index>
+</layout>

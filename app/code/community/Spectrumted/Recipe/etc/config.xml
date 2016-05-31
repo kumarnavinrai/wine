@@ -1,0 +1,206 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Spectrumted (Neo Industries Pty Ltd)
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to Neo Industries Pty LTD Non-Distributable Software Modification License (NDSML)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.spectrumted.com/legal/licenses/NDSM.html
+ * If the license is not included with the package or for any other reason, 
+ * you did not receive your licence please send an email to 
+ * license@spectrumted.com so we can send you a copy immediately.
+ *
+ * This software comes with no warrenty of any kind. By Using this software, the user agrees to hold 
+ * Neo Industries Pty Ltd harmless of any damage it may cause.
+ *
+ * @category    modules
+ * @module      Spectrumted_Recipe
+ * @copyright   Copyright (c) 2011 Neo Industries Pty Ltd (http://www.spectrumted.com)
+ * @license     http://www.spectrumted.com/  Non-Distributable Software Modification License(NDSML 1.0)
+ */
+-->
+<config>
+    <modules>
+        <Spectrumted_Recipe>
+            <version>1.5.2.0</version>
+        </Spectrumted_Recipe>
+    </modules>
+
+    <global>
+        <helpers>
+            <spectrumted_recipe>
+                <class>Spectrumted_Recipe_Helper</class>
+            </spectrumted_recipe>
+        </helpers>
+        <blocks>
+            <spectrumted_recipe>
+                <class>Spectrumted_Recipe_Block</class>
+            </spectrumted_recipe>
+            <rss>
+                <rewrite>
+                    <list>Spectrumted_Recipe_Block_Rss_List</list>
+                </rewrite>
+            </rss>
+        </blocks>
+        <models>
+            <spectrumted_recipe>
+                <class>Spectrumted_Recipe_Model</class>
+                <resourceModel>spectrumted_recipe_resource</resourceModel>
+            </spectrumted_recipe>
+            <spectrumted_recipe_resource>
+                <class>Spectrumted_Recipe_Model_Resource</class>
+                <entities>
+                    <post>
+                        <table>spectrumted_recipe_post</table>
+                    </post>
+                    <category>
+                        <table>spectrumted_recipe_category</table>
+                    </category>
+                    <tag>
+                        <table>spectrumted_recipe_tag</table>
+                    </tag>
+                    <comment>
+                        <table>spectrumted_recipe_comment</table>
+                    </comment>
+                </entities>
+            </spectrumted_recipe_resource>
+        </models>
+        <resources>
+            <spectrumted_recipe_setup>
+                <setup>
+                    <module>Spectrumted_Recipe</module>
+                    <class>Spectrumted_Recipe_Model_Resource_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </spectrumted_recipe_setup>
+        </resources>
+        <events>
+            <controller_front_init_routers>
+                <observers>
+                    <spectrumted_recipe>
+                        <class>Spectrumted_Recipe_Controller_Router</class>
+                        <method>initControllerRouters</method>
+                    </spectrumted_recipe>
+                </observers>
+            </controller_front_init_routers>
+        </events>
+    </global>
+    <admin>
+        <routers>
+           <adminhtml>
+                <args>
+                    <modules>
+                        <spectrumted_recipe after="Mage_Adminhtml">Spectrumted_Recipe_Adminhtml</spectrumted_recipe>
+                    </modules>
+                </args>
+           </adminhtml>
+        </routers>
+
+    </admin>
+    <frontend>
+        <routers>
+            <spectrumted_recipe>
+                <use>standard</use>
+                <args>
+                    <module>Spectrumted_Recipe</module>
+                    <frontName>recipe</frontName>
+                </args>
+            </spectrumted_recipe>
+           <rss>
+                <args>
+                    <modules>
+                        <spectrumted_recipe after="Mage_Rss">Spectrumted_Recipe_Rss</spectrumted_recipe>
+                    </modules>
+                </args>
+           </rss>
+        </routers>
+        <layout>
+            <updates>
+                <spectrumted_recipe>
+                    <file>spectrumted/recipe.xml</file>
+                </spectrumted_recipe>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Spectrumted_Recipe>
+                    <files>
+                        <default>Spectrumted_Recipe.csv</default>
+                    </files>
+                </Spectrumted_Recipe>
+            </modules>
+        </translate>
+    </frontend>
+   <adminhtml>
+        <layout>
+            <updates>
+                <spectrumted_recipe>
+                    <file>spectrumted/recipe.xml</file>
+                </spectrumted_recipe>
+            </updates>
+        </layout>
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <recipe translate="title" module="spectrumted_recipe">
+                                            <title>Spectrumted</title>
+                                        </recipe>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+       <translate>
+           <modules>
+               <Spectrumted_Recipe>
+                   <files>
+                       <default>Spectrumted_Recipe.csv</default>
+                   </files>
+               </Spectrumted_Recipe>
+           </modules>
+       </translate>
+    </adminhtml>
+    <default>
+        <recipe>
+            <general>
+                <add_ips_on_save>1</add_ips_on_save>
+                <time_format>full</time_format>
+                <time_format_custom><![CDATA[EEEE dd MMMM]]></time_format_custom>
+                <frontend_url_key><![CDATA[recipe]]></frontend_url_key>
+
+                <enable_top_menu_link>1</enable_top_menu_link>
+            </general>
+            <frontend>
+                <default_root_template>three_columns</default_root_template>
+            </frontend>
+            <comment>
+                <type_template><![CDATA[spectrumted/recipe/comment/form/default.phtml]]></type_template>
+                <comments_count>5</comments_count>
+            </comment>
+            <category>
+                <show_populated_only>0</show_populated_only>
+            </category>
+            <customer>
+                <enabled>0</enabled>
+            </customer>
+        </recipe>
+        <rss>
+            <spectrumted_recipe>
+                <enabled>0</enabled>
+            </spectrumted_recipe>
+         </rss>
+   </default>
+</config> 

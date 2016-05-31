@@ -1,0 +1,51 @@
+<?php  
+	$collection = Mage::getModel('spectrumted_recipe/post')->getCollection()->addFieldToFilter('status_recipe_of_month', array('in' => '1'));
+				//foreach($collection as $post) {		
+					//echo"<pre>";
+					//print_r( $post);
+				//}
+			
+			
+			
+			//die();
+?>
+<style type="text/css">
+.main-container{padding-bottom:0!important}
+.page{background-color:transparent!important}
+</style>
+<div style="margin:-20px -15px">
+<div class="rec-month">
+<div style="padding:15px">
+<div class="container">
+<div class="row">
+		<div class="col-xs-12 col-sm-12"><h2 class="heading-style-1">RECIPE OF THE MONTH</h2></div>
+	</div>
+<div class="blog blog-detail" style="background-color:rgba(255,2555,255,0.1)">
+<?php foreach($collection as $post) {	 
+//echo"<pre>";
+					//print_r( $post);
+?>
+	
+	<div class="row">
+		<div class="col-xs-12 col-sm-12"><div class="page-title post-title"><h1><a href="<?php echo $post->getReadMoreUrl(); ?>"><?php echo $post->getTitle(); ?></a></h1></div></div>
+	</div>
+	<div class="row">
+		<div class="col-xs-12 col-sm-3 mb-20">
+			<img class="img-responsive mar-auto img-style-1" src='<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).$post->getImage(); ?>' />
+		</div>
+		<div class="col-xs-12 col-sm-9 post-content">
+		<?php echo $post->getContentHtml() ?>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12 prod-desc">
+			<?php echo $post->getDescription() ?>
+		</div>
+	</div>
+	 
+<?php } ?>
+</div>
+</div>
+</div>
+</div>
+</div>

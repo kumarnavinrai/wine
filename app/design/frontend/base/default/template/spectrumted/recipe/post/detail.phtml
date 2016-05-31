@@ -1,0 +1,115 @@
+<?php
+/**
+ * NeoTheme Austrlia (Neo Industries Pty Ltd)
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to Neo Industries Pty LTD Non-Distributable Software Modification License (NDSML)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://www.neotheme.com.au/legal/licenses/NDSM.html
+ * If the license is not included with the package or for any other reason, 
+ * you did not receive your licence please send an email to 
+ * license@neotheme.com.au so we can send you a copy immediately.
+ *
+ * This software comes with no warrenty of any kind. By Using this software, the user agrees to hold 
+ * Neo Industries Pty Ltd harmless of any damage it may cause.
+ *
+ * @category    modules
+ * @module      NeoTheme_ImageRotator
+ * @copyright   Copyright (c) 2011 Neo Industries Pty Ltd (http://www.neotheme.com.au)
+ * @license     http://www.neotheme.com.au/  Non-Distributable Software Modification License(NDSML 1.0)
+ */
+/**
+ * @see Spectrumted_Recipe_Block_Post
+ */
+
+ $formatType = Mage::getStoreConfig(Spectrumted_Recipe_Helper_Data::XPATH_CONFIG_DATETIME_FORMAT_TYPE);
+ $format = ($formatType != 'custom')?
+    Mage::app()->getLocale()->getDateTimeFormat($formatType): 
+    Mage::getStoreConfig(Spectrumted_Recipe_Helper_Data::XPATH_CONFIG_DATETIME_CUSTOM_FORMAT);
+?>
+<div class="blog blog-detail">
+    <article class="post">
+    	<div class="page-title post-title"><h1><?php echo $this->getPost()->getTitle(); ?></h1></div>
+     <div class="row">
+<!--<div class="col-xs-12 col-sm-7 col-md-5 col-lg-4 mb-20">-->
+<div class="col-xs-12 col-sm-12 mb-20 recipe-img-desc">
+<div class="img-style-1">
+  <img alt="image" src='<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).$this->getPost()->getImage();  ?>' class="img-responsive mar-auto">
+  </div>
+</div>
+<div class="col-xs-12 col-sm-12">
+        <div class="post-content">
+            <?php echo $this->getPost()->getContentHtml();?>
+        </div>
+		<div class="row post-style-2">
+          <div class="post-metadata col-sm-12 col-sm-4 col-md-3 ">
+            <ul>
+				 
+                <li class="post-time">
+                    <?php echo $this->__('Posted On: ');?> 
+                    <span><i class="icon-calendar"></i> <?php $date = ($this->getPost()->getPostDate() != NULL)? $this->getPost()->getPostDate()  : $this->getPost()->getCreatedAt() ; ?>
+                    <?php  echo  Mage::app()->getLocale()->date($date)->toString($format); ?></span>
+                </li>
+                
+            </ul>
+        </div>
+		<div class="post-metadata col-sm-12 col-sm-4 col-md-3 col-lg-2">
+            
+				<?php if ($this->getPost()->getAuthor()): ?>
+                <div class="post-author"><i class="icon-user"></i><?php echo $this->__('by'); ?> <span><?php echo $this->getPost()->getAuthor(); ?></span></div>
+                <?php endif;?>
+                 
+           
+        </div>
+        <div class="post-info  col-sm-12 col-sm-4 col-md-3  col-lg-2">
+            <?php if ( (int) $this->getPost()->getStatus() == Spectrumted_Recipe_Model_Post::STATUS_DRAFT) : ?>
+                <h3 style="color:red;"><?php echo $this->__('[Draft] (not visible publicly)');?></h3>
+            <?php endif; ?>
+            <?php if ( $this->getPost()->getCategories()->count()) : ?>
+            <ul class="post-categories">
+                
+                <?php $i = 0; ?>
+                <?php foreach($this->getPost()->getCategories() as $category):?>
+                    <?php $catName =  ($i > 0)? ',' . $category->getName() : $category->getName(); ?>
+                        <li><?php echo $this->__('Posted In: ');?><a href="<?php echo $category->getListUrl();?>"><?php echo $catName; ?></a></li>
+                    <?php $i++; ?>
+                <?php endforeach; ?>
+            </ul>
+            <?php endif;?>
+           
+        </div>
+		 <div class="post-info  col-sm-12 col-sm-4 col-md-3">
+             
+            
+            <?php if ( Mage::helper('spectrumted_recipe')->isDefaultCommentingEnabled()) : ?>
+            <?php 
+                $commentCount = $this->getPost()->getComments()->count();
+                $commentText =  ($commentCount == 1) ? $this->__("comment"):$this->__("comments");
+            ?>
+            <ul>
+                <li class="post-comments"><i class="icon-chat"></i>  <?php echo $commentCount; ?> <?php echo $commentText;?></li>
+            </ul>
+            <?php endif;?>
+        </div>
+		</div>
+       </div>
+	   </div>   
+	   <div class="row">
+	   <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 prod-desc"><?php echo $this->getPost()->getDescription(); ?></div>
+	   </div>
+        <div class="clr"></div>
+    </article>
+    </div>
+	<div class="blog blog-detail">
+    <div class="comments-list">
+		<?php echo $this->getChildHtml('recipe.post.comment.list');?>
+		<div class="comment-form">
+		<?php echo $this->getChildHtml('recipe.post.comment.form');?>
+    </div>
+    </div>
+    
+	
+</div>
+<?php     Zend_Date::setOptions(array('format_type' => 'iso'));     ?>

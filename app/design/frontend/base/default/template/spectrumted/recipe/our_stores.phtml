@@ -1,0 +1,21 @@
+<?php 
+$stores = Mage::getModel('storepickup/store')->getCollection()
+								->addFieldToFilter('status',1);
+
+		//echo 'ID	StoreName	Address		State	City	Zipcode		Phone	Manager<br>';
+  ?>
+  <div class="store-lcation-info">
+		<?php  foreach ($stores as $store) {   ?>
+			<div class="col-sm-4">
+			<div class="store-group">
+			<div class="store-name"><?php echo $store->getStoreName() ?></div>
+			<strong><?php echo $store->getStoreManager() ?></strong><br>
+			<span class="glyphicon glyphicon-home"></span><?php echo $store->getAddress().'<br>'.$store->getCity().', '.$store->getState().' '.$store->getZipcode() ?><br>
+			<span class="glyphicon glyphicon-phone"></span> <?php echo $store->getStorePhone() ?>
+			</div>
+			</div>
+          <!--  
+			echo $store->getId() . ' ' .$store->getStoreName(). ' ' .$store->getAddress(). ' ' .$store->getState(). ' ' .$store->getCity(). ' ' .$store->getZipcode(). ' ' .$store->getStorePhone(). ' ' .$store->getStoreManager().'<br>';//. ' ' . ' ' . ' ' . ' ' . ' '
+>-->
+<?php  } ?>
+</div>

@@ -1,0 +1,48 @@
+
+<?php 
+$_helper = Mage::helper('catalog/output');
+$p_id = Mage::registry('current_product')->getId();
+$product = Mage::getModel('catalog/product')->load($p_id);
+?>
+
+<?php if($product->getTastingNotes()!='' || $product->getAdditionalNotes()!='' || $product->getTechnicalNotes()!='' || $product->getWineMakerNotes()!='') { ?>
+		<div class="col-sm-12 majuu" style="float: inherit;margin: 0 auto;">
+		
+		<div class="col-sm-12">
+			<h2>Notes on <?php echo  $_helper->productAttribute($_product, $product->getName(), 'name') ?> 
+			<span style="font-size: 12px;font-style: italic;font-family: initial;"> <?php echo ' '.$product->getAttributeText('size').' '.$product->getAttributeText('unit').' '.$product->getAttributeText('year') ?></span></h2>
+				<?php if($product->getTastingNotes()!='') { ?>
+					<div class="col-sm-12">
+						<strong>Tasting Notes</strong><br>
+						<?php echo str_replace("Tasting Notes","",$product->getTastingNotes()); ?>
+					</div>
+				<?php } ?>
+				<?php if($product->getAdditionalNotes()!='') { ?>
+					<div class="col-sm-12">
+						<strong>Additional Notes</strong><br>
+						<?php echo str_replace("Additional Notes","",$product->getAdditionalNotes()); ?>
+					</div>
+				<?php } ?>
+				<?php if($product->getTechnicalNotes()!='') { ?>
+					<div class="col-sm-12">
+						<strong>Technical Notes</strong><br>
+						<?php echo str_replace("Technical Notes","",$product->getTechnicalNotes()); ?>
+					</div>
+				<?php } ?>
+				<?php if($product->getWineMakerNotes()!='') { ?>
+					<div class="col-sm-12">
+						<strong>Wine Maker Notes</strong><br>
+						<?php echo str_replace("Wine Maker Notes","",$product->getWineMakerNotes()); ?>
+					</div>
+				<?php } ?>
+				<?php if($product->getFoodPairing()!='') { ?>
+					<div class="col-sm-12">
+						<strong>Food Pairing</strong><br>
+						<?php echo str_replace("Food Pairing","",$product->getFoodPairing()); ?>
+					</div>
+				<?php } ?>
+			</div>
+
+		</div>
+	<?php } ?>
+
