@@ -16,19 +16,18 @@
 </div>
 		<?php
 			    $collection = Mage::getModel('storepickup/store')->getCollection();
-				$a = $collection->toArray();
-				//echo "<pre>";
-				//print_r($a);
-				//die;
+				$allstores = $collection->toArray();
+				
 
 		?>
 		<h3>Location : </h3>
 		<select>
-  <option value="volvo">Volvo</option>
-  <option value="saab">Saab</option>
-  <option value="mercedes">Mercedes</option>
-  <option value="audi">Audi</option>
-</select>
+			<?php if(isset($allstores["items"])){ ?>
+			<?php foreach($allstores["items"] as $key => $val){ $data = $val["store_name"]." ".$val["address"]." ".$val["city"]." ".$val["state"]; ?>
+				<option value="<?php echo $val["store_id"]; ?>"><?php echo $data; ?></option>
+			<?php } ?>	
+			<?php } ?>
+		</select>
 <script type="text/javascript">
 //<![CDATA[
 var SW_MENU_POPUP_WIDTH = <?php echo $_popupWidth; ?>;
