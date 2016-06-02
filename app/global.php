@@ -1,7 +1,5 @@
 <?php
 
-/*
-
 function getUserIP()
 {
     $client  = @$_SERVER['HTTP_CLIENT_IP'];
@@ -25,9 +23,9 @@ function getUserIP()
 }
 
 
-$user_ip = getUserIP();
 
-echo $user_ip; // Output IP address [Ex: 177.87.193.134]
+
+//echo $user_ip; // Output IP address [Ex: 177.87.193.134]
 
 
 
@@ -57,14 +55,16 @@ function ip_info($ip = NULL, $purpose = "location", $deep_detect = TRUE) {
         $ipdat = @json_decode(file_get_contents("http://www.geoplugin.net/json.gp?ip=" . $ip));
         if (@strlen(trim($ipdat->geoplugin_countryCode)) == 2) {
             switch ($purpose) {
-                case "location":
+               case "location":
                     $output = array(
                         "city"           => @$ipdat->geoplugin_city,
                         "state"          => @$ipdat->geoplugin_regionName,
                         "country"        => @$ipdat->geoplugin_countryName,
                         "country_code"   => @$ipdat->geoplugin_countryCode,
                         "continent"      => @$continents[strtoupper($ipdat->geoplugin_continentCode)],
-                        "continent_code" => @$ipdat->geoplugin_continentCode
+                        "continent_code" => @$ipdat->geoplugin_continentCode,
+                        "latitude"       => @$ipdat->geoplugin_latitude,
+                        "longitude"      => @$ipdat->geoplugin_longitude
                     );
                     break;
                 case "address":
@@ -96,26 +96,51 @@ function ip_info($ip = NULL, $purpose = "location", $deep_detect = TRUE) {
     return $output;
 }
 
-$user_ip = "182.74.195.130";
-echo ip_info($user_ip, "Country"); // United States
-echo ip_info($user_ip, "Country Code"); // US
-echo ip_info($user_ip, "State"); // California
-echo ip_info($user_ip, "City"); // Menlo Park
-echo ip_info($user_ip, "Address"); // Menlo Park, California, United States
-
-print_r(ip_info($user_ip, "Location")); // Array ( [city] => Menlo Park [state] => 
-
-echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++";
-
-echo ip_info("173.252.110.27", "Country"); // United States
-echo ip_info("173.252.110.27", "Country Code"); // US
-echo ip_info("173.252.110.27", "State"); // California
-echo ip_info("173.252.110.27", "City"); // Menlo Park
-echo ip_info("173.252.110.27", "Address"); // Menlo Park, California, United States
-
-print_r(ip_info("173.252.110.27", "Location")); // Array ( [city] => Menlo Park [state] => California [country] => United States [country_code] => US [continent] => North America [continent_code] => NA )
 
 
-die;
-*/
+function distance($lat1, $lon1, $lat2, $lon2, $unit) {
+
+  $theta = $lon1 - $lon2;
+  $dist = sin(deg2rad($lat1)) * sin(deg2rad($lat2)) +  cos(deg2rad($lat1)) * cos(deg2rad($lat2)) * cos(deg2rad($theta));
+  $dist = acos($dist);
+  $dist = rad2deg($dist);
+  $miles = $dist * 60 * 1.1515;
+  $unit = strtoupper($unit);
+
+  if ($unit == "K") {
+    return ($miles * 1.609344);
+  } else if ($unit == "N") {
+      return ($miles * 0.8684);
+    } else {
+        return $miles;
+      }
+}
+
+
+//$user_ip = "173.252.110.27";
+//echo ip_info($user_ip, "Country"); // United States
+//echo ip_info($user_ip, "Country Code"); // US
+//echo ip_info($user_ip, "State"); // California
+//echo ip_info($user_ip, "City"); // Menlo Park
+//echo ip_info($user_ip, "Address"); // Menlo Park, California, United States
+//Mage::init();
+//$useriplocation = ip_info($user_ip, "Location"); // Array ( [city] => Menlo Park [state] => 
+//Mage::getSingleton('core/session')->setUserIpLocation($useriplocation); 
+
+//$myValue = Mage::getSingleton('core/session')->getUserIpLocation();
+
+//print_r($myValue);
+//echo "+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++";
+//die;
+//echo ip_info("173.252.110.27", "Country"); // United States
+//echo ip_info("173.252.110.27", "Country Code"); // US
+//echo ip_info("173.252.110.27", "State"); // California
+//echo ip_info("173.252.110.27", "City"); // Menlo Park
+//echo ip_info("173.252.110.27", "Address"); // Menlo Park, California, United States
+
+//print_r(ip_info("173.252.110.27", "Location")); // Array ( [city] => Menlo Park [state] => California [country] => United States [country_code] => US [continent] => North America [continent_code] => NA )
+
+
+//die;
+
 ?>

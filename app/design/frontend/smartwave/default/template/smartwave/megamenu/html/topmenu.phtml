@@ -15,15 +15,58 @@
 
 </div>
 		<?php
-			    $collection = Mage::getModel('storepickup/store')->getCollection();
-				$allstores = $collection->toArray();
-				
+		
+		$user_ip = getUserIP();
+		$user_ip = "173.252.110.27";
+		$useriplocation = ip_info($user_ip, "Location");
+
+		$latitude = $useriplocation["latitude"];
+        $longitude = $useriplocation["longitude"]; 
+  
+        
+
+        
+		$collection = Mage::getModel('storepickup/store')->getCollection();
+		$allstores = $collection->toArray();
+		
+        $allstoresnewdata = array();
+        if(isset($allstores["items"]))
+        {
+		   foreach($allstores["items"] as $key => $val)
+		   { 
+             
+		     $val["storedistancefromuser"] = round(distance($latitude, $longitude, $val["store_latitude"], $val["store_longitude"], "M"), 2);
+
+		     $allstoresnewdata[] = $val;
+			 
+			 
+			} 
+		 } 
+        
+
+ 		$storedistancesfromuser = array();
+
+  
+		if(isset($allstoresnewdata))
+		{ 
+			foreach($allstoresnewdata as $key => $val)
+			{
+     			$storedistancesfromuser[] = $val["storedistancefromuser"];
+
+ 			}
+
+ 			array_multisort($storedistancesfromuser, SORT_ASC, $allstoresnewdata);
+		} 	
+
+  
+
+
 
 		?>
 		<h3>Location : </h3>
 		<select>
-			<?php if(isset($allstores["items"])){ ?>
-			<?php foreach($allstores["items"] as $key => $val){ $data = $val["store_name"]." ".$val["address"]." ".$val["city"]." ".$val["state"]; ?>
+			<?php if(isset($allstoresnewdata)){ ?>
+			<?php foreach($allstoresnewdata as $key => $val){ $data = $val["store_name"]." ".$val["address"]." ".$val["city"]." ".$val["state"]." (".$val["storedistancefromuser"]." Miles)"; ?>
 				<option value="<?php echo $val["store_id"]; ?>"><?php echo $data; ?></option>
 			<?php } ?>	
 			<?php } ?>
