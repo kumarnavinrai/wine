@@ -63,14 +63,118 @@
 
 
 		?>
-		<h3>Location : </h3>
+		<!--<h3>Location : </h3>
 		<select>
-			<?php if(isset($allstoresnewdata)){ ?>
+			<?php if(isset($allstoresnewdata)){  $allstoresnewdatapicthree = $allstoresnewdata;?>
 			<?php foreach($allstoresnewdata as $key => $val){ $data = $val["store_name"]." ".$val["address"]." ".$val["city"]." ".$val["state"]." (".$val["storedistancefromuser"]." Miles)"; ?>
 				<option value="<?php echo $val["store_id"]; ?>"><?php echo $data; ?></option>
 			<?php } ?>	
 			<?php } ?>
-		</select>
+		</select>-->
+<style type="text/css">
+.store-button{float:right;margin-right:15px;border:2px solid #9c6051;padding:5px}
+.store-location{position: relative; float: right; width: 98%; margin-right: 12px; max-width: 520px;}
+.header-location-nearby-stores{background-color:rgba(0,0,0,0.9);color:#fff;overflow:hidden;max-width:500px;width:96%}
+.store-location #hideMe{position: absolute; right: 0px; display: none; top: 27px;}
+.location-near-by-store, .location-near-by-store-locator{float:left;width:40%;}
+.location-near-by-store{background-color:rgba(0,0,0,0.1)}
+.location-near-by-store-locator{width:60%}
+.header-location-nearby-stores ul li:nth-child(1){border-bottom: 3px solid #3e3e3e;color: #fff;font-family: Museo-500;font-size: 0.813em;}
+.header-location-nearby-stores ul li:nth-child(2), .header-location-nearby-stores ul li:nth-child(5) {font-family: Museo-500;font-size: 0.813em;}
+.header-location-nearby-stores ul li:nth-child(4) {border-bottom: 3px solid #3e3e3e;}
+.header-location-nearby-stores li.nearby-title {padding-bottom: 4px !important;padding-top: 6px !important;}
+.header-location-nearby-stores ul li {padding: 0 3.8%;}
+.header-location-nearby-stores ul{padding:0 10px;margin:0}
+.header-location-nearby-stores ul li {color: #fff9d8;list-style:none;line-height:18px;padding:5px 0;font-family: Museo-500;font-size: 0.688em;text-decoration: none;width: 90%;}
+.header-location-nearby-stores ul li span {color: #fff;}
+.header-location-nearby-stores p{margin:0}
+.location-near-by-store .near-bystore-address {padding-bottom: 0;padding-top: 0;}
+ .location-near-by-store-locator table {margin: 0 auto;width: 93%;border-collapse: collapse;border-spacing: 0;}
+.location-near-by-store-locator table tr {font-family: Museo-500;font-size: 0.75em;border-bottom: 3px solid #3e3e3e;color: #fff;}
+.location-near-by-store-locator table tr:first-child td {padding-bottom: 0;padding-top: 5px;}
+.location-near-by-store-locator table tr td {padding-bottom: 7px;padding-left: 5px;padding-top: 13px;vertical-align: top;line-height:18px}
+.location-near-by-store-locator table tr td a {color: #fff9d8;font-family: Museo-500;font-size: 0.97em;padding-left: 0;}
+.location-near-by-store-locator table tr td a.header-change-location {font-weight: 700;}
+</style>
+<script>
+function toggle_visibility(id) {
+    var e = document.getElementById(id);
+    if (e.style.display == 'block' || e.style.display=='') e.style.display = 'none';
+    else e.style.display = 'block';
+}
+</script>
+<?php
+	if(isset($allstoresnewdatapicthree))
+	{
+		$firststore = current($allstoresnewdatapicthree);
+		$secondstore = next($allstoresnewdatapicthree);
+		$thirdstore = next($allstoresnewdatapicthree);
+
+	} 
+//echo "<pre>";
+//	print_r($firststore); die;
+?>
+<div class="store-location">
+<button onclick="toggle_visibility('hideMe')" class="store-button">Your Store &nbsp;&nbsp;&nbsp; 	<?php echo $firststore["store_name"]; ?> (<?php echo $firststore["city"]; ?>), <?php echo $firststore["state"]; ?>	<i class="icon-down-open"></i></button>
+<div style="display: none; position: absolute; right: 0px;" id="hideMe">
+  <div class="header-location-nearby-stores">
+    <div class="location-near-by-store">
+      <ul>
+        <li class="nearby-title">Nearby stores</li>
+        <li class="header-store-name"> <?php echo $secondstore["store_name"]; ?> (<?php echo $secondstore["storedistancefromuser"]."miles"; ?>) </li>
+        <li class="near-bystore-address"> <span>
+          
+          <p><?php echo $secondstore["address"]; ?></p>
+          <?php echo $secondstore["city"]; ?>,&nbsp;<?php echo $secondstore["state"]; ?>&nbsp; <?php echo $secondstore["zipcode"]; ?><br>
+          <?php echo $secondstore["store_phone"]; ?></span> </li>
+        <li class="">
+          <input type="hidden" id="storeName" value="1114">
+          <a class="cart-change-store"> Make this my store <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> </a> </li>
+        <li class="header-store-name"> <?php echo $secondstore["store_name"]; ?> (<?php echo $secondstore["storedistancefromuser"]."miles"; ?>) </li>
+        <li class="near-bystore-address"> <span>
+          
+          <p><?php echo $thirdstore["address"]; ?></p>
+          <?php echo $thirdstore["city"]; ?>,&nbsp;<?php echo $thirdstore["state"]; ?>&nbsp; <?php echo $thirdstore["zipcode"]; ?><br>
+          <?php echo $thirdstore["store_phone"]; ?></span> </li>
+        <li>
+          <a class="cart-change-store"> Make this my store <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> </a> </li>
+      </ul>
+    </div>
+    <div class="location-near-by-store-locator">
+      <table>
+        <tbody>
+          <tr>
+            <td><a class="header-store-details"> Store details     <i class="icon-right-open"></i>  </a></td>
+            <td align="right"><a class="header-change-location">Change location<i class="icon-right-open"></i></a></td>
+          </tr>
+          <tr>
+            <td><span class="header-address-logo"></span>Address</td>
+            <td><?php echo $firststore["store_name"]." <br> ".$firststore["address"]." <br> ".$firststore["city"]." <br> ".$firststore["state"]."&nbsp;".$firststore["zipcode"]; ?><br>
+              <a href="" target="_blank"> Get directions</a> <i class="icon-right-open"></i><br>
+            </td>
+          </tr>
+          <tr>
+            <td><i class="icon-phone"></i>Phone</td>
+            <td> <?php echo $firststore["store_phone"]; ?></td>
+          </tr>
+          <tr>
+            <td nowrap=""><span class="glyphicon glyphicon-time" aria-hidden="true"></span> Today's hours</td>
+            <td>09:00 AM&nbsp;-&nbsp;10:00 PM<br>
+            </td>
+          </tr>
+          <tr>
+            <td><i class="icon-calendar"></i> Next event</td>
+            <td><div><a href="" class="header-tasting">A Tour of Bordeaux</a></div>
+              <div>Friday June 3,2016</div>
+              <div><a href="">Details <i class="icon-right-open"></i> </a></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+</div>
+</div>
 <script type="text/javascript">
 //<![CDATA[
 var SW_MENU_POPUP_WIDTH = <?php echo $_popupWidth; ?>;
