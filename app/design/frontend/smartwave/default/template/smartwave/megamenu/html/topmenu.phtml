@@ -17,7 +17,7 @@
 		<?php
 		
 		$user_ip = getUserIP();
-		$user_ip = "173.252.110.27";
+//		$user_ip = "173.252.110.27";
 		$useriplocation = ip_info($user_ip, "Location");
 
 		$latitude = $useriplocation["latitude"];
@@ -32,16 +32,12 @@
         $allstoresnewdata = array();
         if(isset($allstores["items"]))
         {
-		   foreach($allstores["items"] as $key => $val)
-		   { 
-             
-		     $val["storedistancefromuser"] = round(distance($latitude, $longitude, $val["store_latitude"], $val["store_longitude"], "M"), 2);
-
-		     $allstoresnewdata[] = $val;
-			 
-			 
-			} 
-		 } 
+    		   foreach($allstores["items"] as $key => $val)
+    		   { 
+    		     $val["storedistancefromuser"] = round(distance($latitude, $longitude, $val["store_latitude"], $val["store_longitude"], "M"), 2);
+    		     $allstoresnewdata[] = $val;
+    			 } 
+		    } 
         
 
  		$storedistancesfromuser = array();
@@ -52,15 +48,9 @@
 			foreach($allstoresnewdata as $key => $val)
 			{
      			$storedistancesfromuser[] = $val["storedistancefromuser"];
-
  			}
-
  			array_multisort($storedistancesfromuser, SORT_ASC, $allstoresnewdata);
 		} 	
-
-  
-
-
 
 		?>
 		<!--<h3>Location : </h3>
