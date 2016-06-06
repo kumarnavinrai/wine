@@ -88,6 +88,24 @@ class Magestore_Storepickup_Model_Store extends Mage_Core_Model_Abstract {
     }
 
     protected function _afterSave() {
+        
+        
+        $data = $this->getData();
+                
+        if(isset($data["deliverydistance"]) && $data["deliverydistance"] != "")
+        {    
+            $resource = Mage::getSingleton('core/resource');
+
+            $writeConnection = $resource->getConnection('core_write');
+
+            $table = $resource->getTableName('storepickup/store');
+
+            $query = "UPDATE {$table} SET deliverydistance = '".$data["deliverydistance"]."' WHERE store_id = ".$data["store_id"];
+
+            $writeConnection->query($query);
+        }
+
+
         if ($storeId = $this->getStoreId()) {
             $storeAttributes = $this->getStoreAttributes();
             foreach ($storeAttributes as $attribute) {

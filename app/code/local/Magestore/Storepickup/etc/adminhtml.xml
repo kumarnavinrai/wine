@@ -2,7 +2,7 @@
 <config>
     <menu>
         <storepickup module="storepickup">
-            <title>Store Pickup</title>
+            <title>Store</title>
             <sort_order>70</sort_order>
             <children>
                 <stores module="storepickup">

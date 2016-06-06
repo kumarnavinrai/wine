@@ -57,6 +57,13 @@ class Magestore_Storepickup_Block_Adminhtml_Store_Edit_Tab_Form extends Mage_Adm
 			'name' => 'shipping_price',
 		));
 
+		$fieldset->addField('deliverydistance', 'text', array(
+			'label' => "Store Delivery Distance",
+			'class' => 'required-entry',
+			'required' => true,
+			'name' => 'deliverydistance',
+		));
+
 		$fieldset->addField('status', 'select', array(
 			'label' => Mage::helper('storepickup')->__('Status'),
 			'name' => 'store_status',
