@@ -15,16 +15,22 @@
 
 </div>
 		<?php
+		
 		$user_ip = getUserIP();
-    //$user_ip = "173.252.110.27";
+//		$user_ip = "173.252.110.27";
 		$useriplocation = ip_info($user_ip, "Location");
-    $latitude = $useriplocation["latitude"];
-    $longitude = $useriplocation["longitude"];
+
+		$latitude = $useriplocation["latitude"];
+        $longitude = $useriplocation["longitude"]; 
+  
     $storeId = $storeId = Mage::app()->getStore()->getStoreId();
-    $max_distance_from_store = Mage::getStoreConfig('locdistance/locdistancegrp/maxlocdistancec', $storeId);
+    $max_distance_from_store = Mage::getStoreConfig('locdistance/locdistancegrp/maxlocdistancec', $storeId);    
+
+        
 		$collection = Mage::getModel('storepickup/store')->getCollection();
-    $allstores = $collection->toArray();
-    $allstoresnewdata = array();
+		$allstores = $collection->toArray();
+		
+        $allstoresnewdata = array();
         if(isset($allstores["items"]))
         {
     		   foreach($allstores["items"] as $key => $val)
@@ -36,7 +42,6 @@
         
 
  		$storedistancesfromuser = array();
-    $all_store_distance_is_more_than_set_config = "yes";
 
   
 		if(isset($allstoresnewdata))
@@ -44,19 +49,9 @@
 			foreach($allstoresnewdata as $key => $val)
 			{
      			$storedistancesfromuser[] = $val["storedistancefromuser"];
-          if($max_distance_from_store>=$val["storedistancefromuser"])
-          {
-            $all_store_distance_is_more_than_set_config = "no";
-          }
  			}
  			array_multisort($storedistancesfromuser, SORT_ASC, $allstoresnewdata);
-		} 
-
-
-    if($all_store_distance_is_more_than_set_config == "yes")
-    {
-            $_POST["sidtoset"] = 2; 
-    }	
+		} 	
 
 		?>
 		<!--<h3>Location : </h3>
@@ -118,9 +113,9 @@ function toggle_visibility(id) {
 
   if(isset($_POST["sidtoset"]) && isset($allstoresnewdatapicthree))
   {
-    
+    //print_r($_POST); 
     $allstoresnewdatapicthreenew = Mage::getSingleton('core/session')->getAllstoresnewdatapicthree();
-    
+    //echo "<pre>";
     $lastfirststore = current($allstoresnewdatapicthreenew);
     unset($allstoresnewdatapicthreenew[0]);
     array_push($allstoresnewdatapicthreenew,$lastfirststore);
@@ -148,13 +143,20 @@ function toggle_visibility(id) {
     }   
 
     array_unshift($allstoresnewdatapicthreenew , $storetoset);
+
     $reindexed_array = array_values($allstoresnewdatapicthreenew);
     $allstoresnewdatapicthreenew = $reindexed_array;
+    //print_r($allstoresnewdatapicthreenew);
+    //die;
     $firststore = current($allstoresnewdatapicthreenew);
     $secondstore = next($allstoresnewdatapicthreenew);
     $thirdstore = next($allstoresnewdatapicthreenew);
     Mage::getSingleton('core/session')->setAllstoresnewdatapicthree($allstoresnewdatapicthreenew);
+    
+
   } 
+//echo "<pre>";
+//	print_r($firststore); die;
 ?>
 <div class="store-location">
 <button onclick="toggle_visibility('hideMe')" class="store-button">Your Store &nbsp;&nbsp;&nbsp; 	<?php echo $firststore["store_name"]; ?> <!--(<?php echo $firststore["city"]; ?>), <?php echo $firststore["state"]; ?>-->	<i class="icon-down-open"></i></button>
@@ -183,13 +185,15 @@ function toggle_visibility(id) {
         <li>
           <a class="cart-change-store c_makethismystore" sid="<?php echo $thirdstore["store_id"]; ?>"> Make this my store <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span> </a> </li>
        <?php
+         //echo $i=1;  
+         //echo "<pre>";
          $arraytorunloop = $allstoresnewdatapicthreenew==array()?$allstoresnewdatapicthree:$allstoresnewdatapicthreenew;
     
          foreach($arraytorunloop as $key => $val)
          {
-
+          //$storedistancesfromuser[] = $val["storedistancefromuser"];
           if($i>3)
-          { 
+          { //echo "<pre>"; print_r($val); die;
             ?>
             <li class="header-store-name"> <?php echo $val["store_name"]; ?> (<?php echo $val["storedistancefromuser"]."miles"; ?>) </li>
         <li class="near-bystore-address"> <span>
@@ -253,6 +257,8 @@ $actual_link = 'http' . (isset($_SERVER['HTTPS']) ? 's' : '') . '://' . "{$_SERV
 <script type="text/javascript">
 jQuery(document).ready(function(){
   jQuery(".c_makethismystore").click(function(event){
+      /*alert("<?php echo $actual_link; ?>");*/
+        
         jQuery('<form action="<?php echo $actual_link; ?>" method="POST" style="display:none"><input type="hidden" name="sidtoset" value="'+jQuery(this).attr("sid")+'" /></form>').appendTo('body').submit();
   });
 });
