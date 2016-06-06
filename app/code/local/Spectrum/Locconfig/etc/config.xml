@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Spectrum_Locconfig>
+      <version>0.1.0</version>
+    </Spectrum_Locconfig>
+  </modules>
+  <global>
+    <helpers>
+      <locconfig>
+        <class>Spectrum_Locconfig_Helper</class>
+      </locconfig>
+    </helpers>
+  </global>
+</config> 

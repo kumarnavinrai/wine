@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<config>
+	  <sections>
+		<locdistance  translate="label" module="locconfig">                    
+		<label>Max Store Distance for Location</label>
+		<tab>general</tab>
+		<frontend_type>text</frontend_type>
+		<sort_order>5</sort_order>
+		<show_in_default>1</show_in_default>
+		<show_in_website>1</show_in_website>
+		<show_in_store>1</show_in_store>            
+					<groups>
+				      <locdistancegrp translate="label"> 
+					  <label>Max Store Distance for Location</label>
+					  <frontend_type>text</frontend_type>
+					  <sort_order>5</sort_order>
+					  <show_in_default>1</show_in_default>
+					  <show_in_website>1</show_in_website>
+					  <show_in_store>1</show_in_store>
+				       <fields>
+                          <maxlocdistancec translate="label">
+                            <label>Max Store Distance for Location</label>
+							<frontend_type>text</frontend_type>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<comment>Enter maximum distance from store to visitor for setting default store while first time load</comment>
+                          </maxlocdistancec>
+					   </fields>
+					   </locdistancegrp>
+					</groups>
+		</locdistance>
+	  </sections>
+</config>
