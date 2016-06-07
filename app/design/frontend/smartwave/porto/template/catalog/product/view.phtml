@@ -3,6 +3,33 @@
     $helper_richsnippets = $this->helper('porto/richsnippets');
     $store = Mage::app()->getStore();
     $code  = $store->getCode();
+
+    function getAllShippingMethods()
+    {
+        $methods = Mage::getSingleton('shipping/config')->getActiveCarriers();
+
+        $options = array();
+
+        foreach($methods as $_ccode => $_carrier)
+        {
+            $_methodOptions = array();
+            if($_methods = $_carrier->getAllowedMethods())
+            {
+                foreach($_methods as $_mcode => $_method)
+                {
+                    $_code = $_ccode . '_' . $_mcode;
+                    $_methodOptions[$_mcode] = array('value' => $_code, 'label' => $_method);
+                }
+
+                if(!$_title = Mage::getStoreConfig("carriers/$_ccode/title"))
+                    $_title = $_ccode;
+
+                $options[$_ccode] = array('value' => $_methodOptions, 'label' => $_title);
+            }
+        }
+
+    return $options;
+   }
 ?>
 <?php $_product = $this->getProduct(); ?>
 <?php
@@ -220,7 +247,51 @@ if($enable_addtocart_sticky){
                 <?php echo $this->getChildHtml('addthis_sharetool'); ?>
 				
             </div>
+  
+          <?php
 
+
+          $attribute_code = "product_shipping";
+          $storeIdforattribute = 0; //Mage::app()->getStore()->getStoreId();
+          $productId = $product->getId();
+
+          $valueforattribute = Mage::getResourceModel('catalog/product')->getAttributeRawValue($productId, $attribute_code, $storeIdforattribute);
+
+;
+            if ($valueforattribute != "" && !is_array($valueforattribute)) 
+            {
+
+                $valueforattribute = explode(',', $valueforattribute);
+
+            }
+
+   
+          $shippingarray = getAllShippingMethods();
+         
+    
+          if(is_array($shippingarray) && is_array($valueforattribute))
+          {  
+            foreach ($shippingarray as $key => $value) 
+            {
+                      
+                if (in_array($key,$valueforattribute))
+                {
+                    echo "<p>*".$value["label"]."</p></br>";
+                }
+                else
+                {
+                    echo "<p>x".$value["label"]."</p></br>";   
+                }    
+              
+            }      
+          }
+          else
+          {
+              echo "<p>* Store Pickup</p></br>";
+          }    
+          
+
+          ?>
         </div>
         <?php if ($_product->isSaleable() && $this->hasOptions()):?>
             <?php echo $this->getChildChildHtml('container2', '', true, true) ?>
@@ -407,6 +478,7 @@ if($enable_addtocart_sticky){
 	
     <div class="product-collateral">
         <?php echo $this->getChildHtml('product_additional_data'); ?>
+
     </div>
     <?php echo $this->getChildHtml('upsell_products'); ?>
 </div>

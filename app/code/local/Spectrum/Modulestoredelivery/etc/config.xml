@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Spectrum_Modulestoredelivery>
+      <version>0.1.0</version>
+    </Spectrum_Modulestoredelivery>
+  </modules>
+  <global>
+    <helpers>
+      <modulestoredelivery>
+        <class>Spectrum_Modulestoredelivery_Helper</class>
+      </modulestoredelivery>
+    </helpers>
+	<models>
+	  <modulestoredelivery>
+		<class>Spectrum_Modulestoredelivery_Model</class>
+		<resourceModel>modulestoredelivery_mysql4</resourceModel>
+	  </modulestoredelivery>
+	</models>
+  </global>    
+	<default>
+        <carriers>
+            <deliveryfromstore>
+                <active>1</active>
+                <model>modulestoredelivery/carrier_deliveryfromstore</model>
+                <name>Storedeliverym</name>
+                <title>Store Delivery</title>
+                <description>test</description>
+                <sort_order>10</sort_order>
+            </deliveryfromstore>
+        </carriers>
+    </default>
+</config> 
