@@ -61,7 +61,7 @@
         
         if($all_store_distance_is_more_than_set_config == "yes")
         {
-            $all_store_distance_is_more_than_set_config_storeidtoset = 4; 
+            $all_store_distance_is_more_than_set_config_storeidtoset = 2; 
         }     
 
  		$storedistancesfromuser = array();
@@ -174,7 +174,7 @@ function toggle_visibility(id) {
 
 
 
-  if(isset($all_store_distance_is_more_than_set_config_storeidtoset) && isset($allstoresnewdata))
+  if(isset($all_store_distance_is_more_than_set_config_storeidtoset) && $all_store_distance_is_more_than_set_config_storeidtoset == "yes" && isset($allstoresnewdata) && !isset($storeidtoset))
   {
     //print_r($_POST); 
     $allstoresnewdatapicthreenew = $allstoresnewdata;
