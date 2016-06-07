@@ -12,7 +12,7 @@ $collection = Mage::getModel('storepickup/store')->getCollection();
     			 } 
 		    } 
         
-        $all_store_distance_is_more_than_set_config = "yes";
+       
         if(isset($allstoresnewdata))
         { 
           foreach($allstoresnewdata as $key => $val)
