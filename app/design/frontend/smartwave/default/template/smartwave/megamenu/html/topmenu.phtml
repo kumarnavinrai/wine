@@ -19,7 +19,7 @@
 		$user_ip = getUserIP();
 //		$user_ip = "173.252.110.27";
 		$useriplocation = ip_info($user_ip, "Location");
-
+     $all_store_distance_is_more_than_set_config = "yes";
 		$latitude = $useriplocation["latitude"];
         $longitude = $useriplocation["longitude"]; 
   
@@ -30,152 +30,45 @@
     {
       $storeidtoset = $_POST["sidtoset"];
     }  
-        
 
+    //getting store and finding distance
+		require_once("getting_store_and_finding_distance.php");
+    //---end here--
 
-		$collection = Mage::getModel('storepickup/store')->getCollection();
-		$allstores = $collection->toArray();
-		
-        $allstoresnewdata = array();
-        if(isset($allstores["items"]))
-        {
-    		   foreach($allstores["items"] as $key => $val)
-    		   { 
-    		     $val["storedistancefromuser"] = round(distance($latitude, $longitude, $val["store_latitude"], $val["store_longitude"], "M"), 2);
-    		     $allstoresnewdata[] = $val;
-    			 } 
-		    } 
-        
-        $all_store_distance_is_more_than_set_config = "yes";
-        if(isset($allstoresnewdata))
-        { 
-          foreach($allstoresnewdata as $key => $val)
-          {
-             if($max_distance_from_store>=$val["storedistancefromuser"])
-             {
-               $all_store_distance_is_more_than_set_config = "no";
-             }
-          }
-          
-        }
-        
-        if($all_store_distance_is_more_than_set_config == "yes")
-        {
-            $all_store_distance_is_more_than_set_config_storeidtoset = 2; 
-        }     
-
- 		$storedistancesfromuser = array();
-
-  
-		if(isset($allstoresnewdata))
-		{ 
-			foreach($allstoresnewdata as $key => $val)
-			{
-     			$storedistancesfromuser[] = $val["storedistancefromuser"];
- 			}
- 			array_multisort($storedistancesfromuser, SORT_ASC, $allstoresnewdata);
-		} 	
-
-		?>
-	
-<style type="text/css">
-.store-button{float:right;border:2px solid #9c6051;padding:5px}
-.store-location{position: relative; float: right; width: 98%; margin-right: 12px; max-width: 520px;}
-.header-location-nearby-stores{background-color:rgba(0,0,0,0.9);color:#fff;overflow:hidden;max-width:500px;width:100%}
-.store-location #hideMe{position: absolute; right: 0px; display: none; top: 27px;}
-.location-near-by-store, .location-near-by-store-locator{float:left;width:40%;height: 405px;overflow-x: hidden;}
-.location-near-by-store{background-color:rgba(0,0,0,0.1)}
-.location-near-by-store-locator{width:60%}
-.header-location-nearby-stores ul li:nth-child(1){border-bottom: 3px solid #3e3e3e;color: #fff;font-family: Museo-500;font-size: 0.813em;}
-.header-location-nearby-stores ul li:nth-child(2), .header-location-nearby-stores ul li:nth-child(5) {font-family: Museo-500;font-size: 0.813em;}
-.header-location-nearby-stores ul li:nth-child(4) {border-bottom: 3px solid #3e3e3e;}
-.header-location-nearby-stores li.nearby-title {padding-bottom: 4px !important;padding-top: 6px !important;}
-.header-location-nearby-stores ul li {padding: 0 3.8%;}
-.header-location-nearby-stores ul{padding:0 10px;margin:0}
-.header-location-nearby-stores ul li {color: #fff9d8;list-style:none;line-height:18px;padding:5px 0;font-family: Museo-500;font-size: 0.688em;text-decoration: none;width: 90%;}
-.header-location-nearby-stores ul li span {color: #fff;}
-.header-location-nearby-stores p{margin:0}
-.location-near-by-store .near-bystore-address {padding-bottom: 0;padding-top: 0;}
- .location-near-by-store-locator table {margin: 0 auto;width: 93%;border-collapse: collapse;border-spacing: 0;}
-.location-near-by-store-locator table tr {font-family: Museo-500;font-size: 0.75em;border-bottom: 3px solid #3e3e3e;color: #fff;}
-.location-near-by-store-locator table tr:first-child td {padding-bottom: 0;padding-top: 5px;}
-.location-near-by-store-locator table tr td {padding-bottom: 7px;padding-left: 5px;padding-top: 13px;vertical-align: top;line-height:18px}
-.location-near-by-store-locator table tr td a {color: #fff9d8;font-family: Museo-500;font-size: 0.97em;padding-left: 0;}
-.location-near-by-store-locator table tr td a.header-change-location {font-weight: 700;}
-.store-location #hideMe a{cursor:pointer}
-</style>
-<script>
-function toggle_visibility(id) {
-    var e = document.getElementById(id);
-    if (e.style.display == 'block' || e.style.display=='') e.style.display = 'none';
-    else e.style.display = 'block';
-}
-</script>
-<?php
-  
-  if (Mage::getSingleton('core/session')->getAllstoresnewdatapicthree())
-  {
-    $allstoresnewdatapicthree = Mage::getSingleton('core/session')->getAllstoresnewdatapicthree();
-  }
-
-
-	if(!isset($storeidtoset) && isset($allstoresnewdatapicthree))
-	{
-		$firststore = current($allstoresnewdatapicthree);
-		$secondstore = next($allstoresnewdatapicthree);
-		$thirdstore = next($allstoresnewdatapicthree);
-    Mage::getSingleton('core/session')->setAllstoresnewdatapicthree($allstoresnewdatapicthree);
-	} 
-
-  if(isset($storeidtoset) && isset($allstoresnewdatapicthree))
-  {
-    //print_r($_POST); 
-    $allstoresnewdatapicthreenew = Mage::getSingleton('core/session')->getAllstoresnewdatapicthree();
-    //echo "<pre>";
-    $lastfirststore = current($allstoresnewdatapicthreenew);
-    unset($allstoresnewdatapicthreenew[0]);
-    array_push($allstoresnewdatapicthreenew,$lastfirststore);
-    $keyofstoretoset = 0;
-    $storetoset = array();
-    foreach ($allstoresnewdatapicthreenew as $key => $value) 
+    if($all_store_distance_is_more_than_set_config == "yes")
     {
-      if($value["store_id"] == $storeidtoset)
-      {
-        $keyofstoretoset = $key;
-        $storetoset = $value;
-        break;
-      }
+        $all_store_distance_is_more_than_set_config_storeidtoset = 2; 
+    }     
+
+    //sorting array by distance
+ 		require_once("sorting_array_by_distance.php");
+    //--end here
+
+    //css for location drop down one script also in this file
+    include_once("css_fo_ location_drop_down.phtml");
+    //--end here
+
+    $allstoresnewdatapicthree = $allstoresnewdata;
+
+    if (Mage::getSingleton('core/session')->getAllstoresnewdatapicthree())
+    {
+      $allstoresnewdatapicthree = Mage::getSingleton('core/session')->getAllstoresnewdatapicthree();
     }
-    unset($allstoresnewdatapicthreenew[$keyofstoretoset]);
-    //sort again with distance
-    if(isset($allstoresnewdatapicthreenew))
-    { 
-      foreach($allstoresnewdatapicthreenew as $key => $val)
-      {
-          $storedistancesfromuser[] = $val["storedistancefromuser"];
 
-      }
-      array_multisort($storedistancesfromuser, SORT_ASC, $allstoresnewdatapicthreenew);
-    }   
-
-    array_unshift($allstoresnewdatapicthreenew , $storetoset);
-
-    $reindexed_array = array_values($allstoresnewdatapicthreenew);
-    $allstoresnewdatapicthreenew = $reindexed_array;
-    //print_r($allstoresnewdatapicthreenew);
-    //die;
-    $firststore = current($allstoresnewdatapicthreenew);
-    $secondstore = next($allstoresnewdatapicthreenew);
-    $thirdstore = next($allstoresnewdatapicthreenew);
-    Mage::getSingleton('core/session')->setAllstoresnewdatapicthree($allstoresnewdatapicthreenew);
-    
-
+  //store id not set and distance is less than config
+  if(!isset($storeidtoset) && isset($allstoresnewdatapicthree) && $all_store_distance_is_more_than_set_config == "no")
+  {  //echo "store id not set and distance is less than config";
+    $firststore = current($allstoresnewdatapicthree);
+    $secondstore = next($allstoresnewdatapicthree);
+    $thirdstore = next($allstoresnewdatapicthree);
+    Mage::getSingleton('core/session')->setAllstoresnewdatapicthree($allstoresnewdatapicthree);
   } 
 
 
-
-  if(isset($all_store_distance_is_more_than_set_config_storeidtoset) && $all_store_distance_is_more_than_set_config_storeidtoset == "yes" && isset($allstoresnewdata) && !isset($storeidtoset))
-  {
+ 
+  //store id not set and distance is more than config
+  if($all_store_distance_is_more_than_set_config == "yes" && isset($allstoresnewdata) && !isset($storeidtoset))
+  {  //echo "store id not set and distance is more than config";
     //print_r($_POST); 
     $allstoresnewdatapicthreenew = $allstoresnewdata;
     //echo "<pre>";
@@ -218,8 +111,54 @@ function toggle_visibility(id) {
     
 
   } 
-//echo "<pre>";
-//	print_r($firststore); die;
+
+  //store id set and regardless distance store will be set
+  if(isset($storeidtoset) && isset($allstoresnewdatapicthree) )
+  {  //echo "store id set and regardless distance store will be set";
+    //print_r($_POST); 
+    $allstoresnewdatapicthreenew = $allstoresnewdatapicthree;
+    //echo "<pre>";
+    $lastfirststore = current($allstoresnewdatapicthreenew);
+    unset($allstoresnewdatapicthreenew[0]);
+    array_push($allstoresnewdatapicthreenew,$lastfirststore);
+    $keyofstoretoset = 0;
+    $storetoset = array();
+    foreach ($allstoresnewdatapicthreenew as $key => $value) 
+    {
+      if($value["store_id"] == $storeidtoset)
+      {
+        $keyofstoretoset = $key;
+        $storetoset = $value;
+        break;
+      }
+    }
+    unset($allstoresnewdatapicthreenew[$keyofstoretoset]);
+    //sort again with distance
+    if(isset($allstoresnewdatapicthreenew))
+    { 
+      foreach($allstoresnewdatapicthreenew as $key => $val)
+      {
+          $storedistancesfromuser[] = $val["storedistancefromuser"];
+
+      }
+      array_multisort($storedistancesfromuser, SORT_ASC, $allstoresnewdatapicthreenew);
+    }   
+
+    array_unshift($allstoresnewdatapicthreenew , $storetoset);
+
+    $reindexed_array = array_values($allstoresnewdatapicthreenew);
+    $allstoresnewdatapicthreenew = $reindexed_array;
+    //print_r($allstoresnewdatapicthreenew);
+    //die;
+    $firststore = current($allstoresnewdatapicthreenew);
+    $secondstore = next($allstoresnewdatapicthreenew);
+    $thirdstore = next($allstoresnewdatapicthreenew);
+    Mage::getSingleton('core/session')->setAllstoresnewdatapicthree($allstoresnewdatapicthreenew);
+    
+
+  } 
+
+
 ?>
 <div class="store-location">
 <button onclick="toggle_visibility('hideMe')" class="store-button">Your Store &nbsp;&nbsp;&nbsp; 	<?php echo $firststore["store_name"]; ?> <!--(<?php echo $firststore["city"]; ?>), <?php echo $firststore["state"]; ?>-->	<i class="icon-down-open"></i></button>
