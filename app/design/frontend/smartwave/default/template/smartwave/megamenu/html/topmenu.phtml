@@ -23,7 +23,7 @@
 		$latitude = $useriplocation["latitude"];
         $longitude = $useriplocation["longitude"]; 
   
-    $storeId = $storeId = Mage::app()->getStore()->getStoreId();
+    $storeId = Mage::app()->getStore()->getStoreId();
     $max_distance_from_store = Mage::getStoreConfig('locdistance/locdistancegrp/maxlocdistancec', $storeId);    
 
     if(isset($_POST["sidtoset"]) && $_POST["sidtoset"] != "")
@@ -61,7 +61,7 @@
         
         if($all_store_distance_is_more_than_set_config == "yes")
         {
-            $storeidtoset = 2; 
+            $all_store_distance_is_more_than_set_config_storeidtoset = 4; 
         }     
 
  		$storedistancesfromuser = array();
@@ -77,14 +77,7 @@
 		} 	
 
 		?>
-		<!--<h3>Location : </h3>
-		<select>
-			<?php if(isset($allstoresnewdata)){  $allstoresnewdatapicthree = $allstoresnewdata;?>
-			<?php foreach($allstoresnewdata as $key => $val){ $data = $val["store_name"]." ".$val["address"]." ".$val["city"]." ".$val["state"]." (".$val["storedistancefromuser"]." Miles)"; ?>
-				<option value="<?php echo $val["store_id"]; ?>"><?php echo $data; ?></option>
-			<?php } ?>	
-			<?php } ?>
-		</select>-->
+	
 <style type="text/css">
 .store-button{float:right;border:2px solid #9c6051;padding:5px}
 .store-location{position: relative; float: right; width: 98%; margin-right: 12px; max-width: 520px;}
@@ -147,6 +140,53 @@ function toggle_visibility(id) {
     foreach ($allstoresnewdatapicthreenew as $key => $value) 
     {
       if($value["store_id"] == $storeidtoset)
+      {
+        $keyofstoretoset = $key;
+        $storetoset = $value;
+        break;
+      }
+    }
+    unset($allstoresnewdatapicthreenew[$keyofstoretoset]);
+    //sort again with distance
+    if(isset($allstoresnewdatapicthreenew))
+    { 
+      foreach($allstoresnewdatapicthreenew as $key => $val)
+      {
+          $storedistancesfromuser[] = $val["storedistancefromuser"];
+
+      }
+      array_multisort($storedistancesfromuser, SORT_ASC, $allstoresnewdatapicthreenew);
+    }   
+
+    array_unshift($allstoresnewdatapicthreenew , $storetoset);
+
+    $reindexed_array = array_values($allstoresnewdatapicthreenew);
+    $allstoresnewdatapicthreenew = $reindexed_array;
+    //print_r($allstoresnewdatapicthreenew);
+    //die;
+    $firststore = current($allstoresnewdatapicthreenew);
+    $secondstore = next($allstoresnewdatapicthreenew);
+    $thirdstore = next($allstoresnewdatapicthreenew);
+    Mage::getSingleton('core/session')->setAllstoresnewdatapicthree($allstoresnewdatapicthreenew);
+    
+
+  } 
+
+
+
+  if(isset($all_store_distance_is_more_than_set_config_storeidtoset) && isset($allstoresnewdatapicthree))
+  {
+    //print_r($_POST); 
+    $allstoresnewdatapicthreenew = $allstoresnewdatapicthree;
+    //echo "<pre>";
+    $lastfirststore = current($allstoresnewdatapicthreenew);
+    unset($allstoresnewdatapicthreenew[0]);
+    array_push($allstoresnewdatapicthreenew,$lastfirststore);
+    $keyofstoretoset = 0;
+    $storetoset = array();
+    foreach ($allstoresnewdatapicthreenew as $key => $value) 
+    {
+      if($value["store_id"] == $all_store_distance_is_more_than_set_config_storeidtoset)
       {
         $keyofstoretoset = $key;
         $storetoset = $value;
