@@ -258,12 +258,12 @@ if($enable_addtocart_sticky){
           $valueforattribute = Mage::getResourceModel('catalog/product')->getAttributeRawValue($productId, $attribute_code, $storeIdforattribute);
 
 ;
-            if ($valueforattribute != "" && !is_array($valueforattribute)) 
-            {
+          if ($valueforattribute != "" && !is_array($valueforattribute)) 
+          {
 
-                $valueforattribute = explode(',', $valueforattribute);
+            $valueforattribute = explode(',', $valueforattribute);
 
-            }
+          }
 
    
           $shippingarray = getAllShippingMethods();

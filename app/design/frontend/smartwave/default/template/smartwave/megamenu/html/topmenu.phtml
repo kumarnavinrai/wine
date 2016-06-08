@@ -29,8 +29,17 @@
     if(isset($_POST["sidtoset"]) && $_POST["sidtoset"] != "")
     {
       $storeidtoset = $_POST["sidtoset"];
+      Mage::getModel('core/cookie')->delete('sidtosetcookie');
+      Mage::getModel('core/cookie')->set('sidtosetcookie',$_POST["sidtoset"], 600);
     }  
+    
+    $sidcokkiesetvalue = Mage::getModel('core/cookie')->get("sidtosetcookie");
+    if($sidcokkiesetvalue != "")
+    {
+       $storeidtoset = $sidcokkiesetvalue;
+    }
 
+ 
     //getting store and finding distance
 		require_once(dirname(__FILE__) . "/getting_store_and_finding_distance.php");
     //---end here--
